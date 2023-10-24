@@ -3,6 +3,7 @@ import sys
 from CONSTANTS import *
 from utils import grid_maker
 from level import Level
+from player import Player
 
 
 
@@ -27,6 +28,7 @@ sun_image=pygame.transform.scale(sun,(TILE_SIZE,TILE_SIZE))
 sun_rect=sun_image.get_rect(center=(100,100))
 
 level=Level(LEVEL_DATA)
+player=Player(100,370)
 
 
 
@@ -47,6 +49,7 @@ while True:
     screen.blit(sky_bg,sky_rect)
     screen.blit(sun_image,sun_rect)
     level.run(screen)
+    player.run(screen)
 
 
     # grid_maker(screen)
