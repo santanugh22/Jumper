@@ -21,9 +21,10 @@ sky_bg=pygame.transform.scale(sky,(WIDTH,HEIGHT))
 sky_rect=sky_bg.get_rect(topleft=(0,0))
 
 
-sun_img=pygame.image.load('img/sun_shiny.png')
+sun=pygame.image.load('img/sun_shiny.png')
+sun_image=pygame.transform.scale(sun,(TILE_SIZE,TILE_SIZE))
 
-sun_rect=sun_img.get_rect(center=(100,100))
+sun_rect=sun_image.get_rect(center=(100,100))
 
 level=Level(LEVEL_DATA)
 
@@ -44,7 +45,7 @@ while True:
     
 
     screen.blit(sky_bg,sky_rect)
-    screen.blit(sun_img,sun_rect)
+    screen.blit(sun_image,sun_rect)
     level.run(screen)
 
 
