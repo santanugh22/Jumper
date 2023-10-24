@@ -1,48 +1,55 @@
-# Begining of the game code
-
 import pygame
 import sys
 from CONSTANTS import *
-from Level import Level
+from utils import grid_maker
+from level import Level
+
+
+
 
 pygame.init()
-screen=pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
 clock=pygame.time.Clock()
-pygame.display.set_caption("Meow")
-sun_image=pygame.image.load('./img/sun_shiny.png').get_alpha()
-sun_rect=sun_image.get_rect(center=(200,200))
 
 
-sky_bg=pygame.image.load('./img/sky.png')
+
+screen=pygame.display.set_mode((WIDTH,HEIGHT))
+
+
+# Background and the sun
+sky=pygame.image.load('img/sky.png')
+sky_bg=pygame.transform.scale(sky,(WIDTH,HEIGHT))
 sky_rect=sky_bg.get_rect(topleft=(0,0))
-level_map=Level(level_data)
+
+
+sun_img=pygame.image.load('img/sun_shiny.png')
+
+sun_rect=sun_img.get_rect(center=(100,100))
+
+level=Level(LEVEL_DATA)
 
 
 
-def draw_grid():
-    for line in range(0,10):
-        pygame.draw.line(screen,'black',(0,line*TILE_SIZE),(SCREEN_WIDTH,line*TILE_SIZE))
-        pygame.draw.line(screen,'black',(TILE_SIZE*line,0),(TILE_SIZE*line,SCREEN_HEIGHT))
+
+
+
 
 
 while True:
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
-            sys.exit()
             pygame.quit()
+            sys.exit()
 
-   
-   
-    screen.blit(sky_bg,sky_rect)
-    screen.blit(sun_image,sun_rect)
-    screen.blit()
-    draw_grid()
 
     
 
+    screen.blit(sky_bg,sky_rect)
+    screen.blit(sun_img,sun_rect)
+    level.run(screen)
+
+
+    # grid_maker(screen)
 
     pygame.display.update()
     clock.tick(60)
-    
-    
-        
+

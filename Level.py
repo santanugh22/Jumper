@@ -1,28 +1,38 @@
 import pygame
 from CONSTANTS import *
 
+
 class Level:
-    def __init__(self,level_data):
+    def __init__(self, level_data) -> None:
+        dirt_image = pygame.image.load('img/dirt.png')
+        grass_image=pygame.image.load('img/grass.png')
+        self.tiles = []
 
+        row_count = 0
+        for row in level_data:
+            col_count = 0
+            for tile in row:
+                if tile == 0:
+                    image = pygame.transform.scale(
+                        dirt_image, (TILE_SIZE, TILE_SIZE))
+                    rect = image.get_rect()
+                    rect.x = col_count*TILE_SIZE
+                    rect.y = row_count*TILE_SIZE
+                    tile = (image, rect)
+                    self.tiles.append(tile)
+                if tile==2:
+                      image = pygame.transform.scale(
+                      grass_image, (TILE_SIZE, TILE_SIZE))
+                      rect = image.get_rect()
+                      rect.x = col_count*TILE_SIZE
+                      rect.y = row_count*TILE_SIZE
+                      tile = (image, rect)
+                      self.tiles.append(tile)
 
-        for item,index in enumerate(level_data):
-            if item==1:
-                self.image=pygame.image.load('img/grass.png')
-                self.rect=self.image.get_rect(center=(index*TILE_SIZE,index))
+                col_count+=1
+            row_count+=1
+       
 
-
-            else:
-                continue
-
-
-# this is teh false text that os being written in ithe main section of the page to be very awary of the situation of the main thing in the
-        
-
-        
-
-
-        
-
-
-
-
+    def run(self, screen):
+        for tile in self.tiles:
+            screen.blit(tile[0], tile[1])
