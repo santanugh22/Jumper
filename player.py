@@ -1,6 +1,9 @@
 import pygame
 from CONSTANTS import *
 from random import randint
+from level import Level
+
+level=Level(LEVEL_DATA)
 
 
 
@@ -26,19 +29,24 @@ class Player:
       self.y=y
       self.x=x
     
-      self.gravity= 4
+      self.gravity= 5
+      self.vel=-5
       self.jumped=False
       self.walk=False
       self.direction='Right'
 
+
+      self.height=self.image.get_height()
+      self.width=self.image.get_width()
+
     
 
-    def movement(self):
+    def Movement(self):
        keys=pygame.key.get_pressed()
 
        if keys[pygame.K_RIGHT]:
           self.walk=True
-          self.rect.x+=4
+          self.rect.x+=5
           self.direction='Right'
 
        if keys[pygame.K_LEFT]:
@@ -49,11 +57,13 @@ class Player:
        if keys[pygame.K_SPACE] and self.rect.y==self.y:
 
           self.rect.bottom-=200
+          
           self.walk=False
           self.jumped=True
 
        if keys[pygame.K_LEFT]==False and keys[pygame.K_RIGHT]==False:
           self.walk=False
+          
 
      
            
@@ -91,6 +101,16 @@ class Player:
        if self.rect.y==self.y:
           self.jumped=False
 
+
+    def Collison_detector(self):
+       for tile in level.tiles:
+          if tile[1].colliderect(self.rect.x,self.rect.y+5,self.width,self.height):
+            #  pass
+            #  lets check if it is Jumping
+            
+             self.y=tile[1].top-self.rect.bottom
+
+
           
        
        
@@ -116,13 +136,17 @@ class Player:
 
 
     def run(self,screen):
-       self.movement()
+       self.Movement()
+       
        self.Animations()
 
        self.Gravity()
+       self.Collison_detector()
 
        
        
        
        
        screen.blit(self.image,self.rect)
+
+       pygame.draw.rect(screen,(255,255,255),self.rect,2)

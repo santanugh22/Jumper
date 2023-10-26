@@ -48,6 +48,7 @@ while True:
 
     screen.blit(sky_bg,sky_rect)
     screen.blit(sun_image,sun_rect)
+    
     level.run(screen)
     player.run(screen)
 
